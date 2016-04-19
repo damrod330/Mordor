@@ -1,0 +1,44 @@
+select employee_id, last_name, salary, salary + (15.5*salary/100) as "New Salary" from employees
+
+select employee_id, last_name, salary, salary + (15.5*salary/100) as "New Salary", (salary + (15.5*salary/100) - salary) as "Increse" from employees
+
+select initcap(last_name), length(last_name) as "Length" from employees where last_name like 'A%' or last_name like 'M%' or last_name like'J%' order by last_name asc;
+
+zamienia wielkość liter:
+initcap(adasdasd)
+upper(asdadad)
+lower(asdada)
+lpad (kolumna, ile znaków '12', czym zastapic '*')//wpisywać od lewej ileś znaków wskazanych przz ciebie
+rpad 
+& - możliwość wpisania przez uzytkownika
+% - dowolny ciąg znaków
+
+select initcap(last_name), length(last_name) as "Length" from employees where last_name like '&literka%' order by last_name asc;
+
+Operacje na dacie:
+months_between(data, data)
+add_months (data, wartość)
+next_day (data, 'znak') //liczba lub pierwsza litera nazwy dnia tygodnia
+trunk (data [, 'fmt'])
+to_char(data, 'DAY') //zamienia na nazwe dnia
+nvl( costa, co zrob) // if null
+
+select last_name, round(months_between (sysdate , hire_date)) as "Months_worked" from employees order by hire_date desc;
+
+select last_name, lpad(salary, 20,'*') as "Salary" from employees
+
+select   rpad(rpad(last_name,15, ' '),15+ salary/1000,'$') as "Last Name, salary" from employees
+
+select   last_name, trunc((sysdate - hire_date)/7) as "TENURE" from employees where department_id = 90
+
+select   last_name, hire_date, to_char(hire_date, 'DAY') as "DAY" from employees order by to_char(hire_date, 'd')
+
+select   last_name, nvl(to_char(lpad(lpad(commission_pct, 4, ' '), 14, 'commision: ')), 'no commision')  from employees 
+
+select job_id, decode(job_id, 'AD_PRES', 'A', 'ST_MAN', 'B', 'IT_PROG', 'S', 'SA_REP', 'D', '0' ) as grade  from employees 
+
+select job_id, case job_id when 'AD_PRES' then 'A' when 'ST_MAN' then 'B' when 'IT_PROG' then 'S' when 'SA_REP' then 'D' else 'zero' end as grade  from employees 
+
+select department_id from DEPARTMENTS minus select department_id from employees where job_id='ST_CLERK';
+
+select country_id, country_name from countries minus select l.country_id, c.country_name from locations l, countries c 
